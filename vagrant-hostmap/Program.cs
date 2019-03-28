@@ -21,6 +21,12 @@ namespace VagrantHostmap
             Console.WriteLine("Retrieving box SSH info...");
             var connInfoReader = new BoxConnectionInfoReader(Environment.CurrentDirectory);
             var connectionInfo = connInfoReader.GetSshConnectionInfo();
+            if(connectionInfo == null)
+            {
+                Console.WriteLine("Failed to get SSH info.");
+                Console.WriteLine("Make sure a vagrant box is setup correctly at this location and it is running.");
+                return;
+            }
 
             Console.WriteLine("Connecting to box...");
             var client = new SshClient(connectionInfo);

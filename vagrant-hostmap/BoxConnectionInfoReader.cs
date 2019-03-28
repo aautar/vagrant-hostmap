@@ -24,6 +24,15 @@ namespace VagrantHostmap
             string rawSshInfo = this.ExecuteVagrantSshInfo();
 
             var allLines = rawSshInfo.Split(',');
+            for(int i=0; i<allLines.Length; i++)
+            {
+                if(allLines[i] == "Vagrant::Errors::NoEnvironmentError")
+                {
+                    return null;
+                }
+            }
+
+
             var infoLineSplit = allLines[7].Split(new string[] { "\\n" }, StringSplitOptions.None);
             for(int i=0; i<infoLineSplit.Length; i++)
             {
