@@ -10,6 +10,14 @@ namespace VagrantHostmap
     {
         static void Main(string[] args)
         {
+            if(args.Length == 0 || args[0].Length == 0)
+            {
+                Console.WriteLine("hostname not specified");
+                return;
+            }
+
+            var desiredHostname = args[0];
+
             Console.WriteLine("Retrieving box SSH info...");
             var connInfoReader = new BoxConnectionInfoReader(Environment.CurrentDirectory);
             var connectionInfo = connInfoReader.GetSshConnectionInfo();
@@ -30,7 +38,33 @@ namespace VagrantHostmap
             Console.WriteLine("Connectable IP address found: " + ipAddresses[0]);
 
 
-            
+            HostsFileUpdater hostFileUpdater = new HostsFileUpdater();
+            var existingEntry = hostFileUpdater.GetEntryForHostname(desiredHostname);
+
+            if (existingEntry != null)
+            {
+                Console.WriteLine("Existing entry found in hosts file: " + existingEntry);
+
+                if (existingEntry.StartsWith(ipAddresses[0]))
+                {
+                    Console.WriteLine("Existing entry is valid, no update needed.");
+                    return;
+                }
+                else
+                {
+                    var updatedEntry = hostFileUpdater.UpdateEntry(ipAddresses[0], desiredHostname, existingEntry);
+                    Console.WriteLine("Updated entry: " + updatedEntry);
+                }
+            }
+            else
+            {
+                var newEntry = hostFileUpdater.AddEntry(ipAddresses[0], desiredHostname);
+                Console.WriteLine("Added entry: " + newEntry);
+            }
+
+            hostFileUpdater.CopyTempToActual();
+            Console.WriteLine("done.");
+
         }
     }
 }
