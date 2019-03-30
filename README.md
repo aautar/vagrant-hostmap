@@ -13,6 +13,6 @@ Once installed, run the following within a directory that has a vagrant environm
 
 ## Installation
 
-Compile the code, place the exe + related dependencies in directory, update the PATH environment var and add the directory.
+Run the installer, **vagrant-hostmap.msi**
 
-(This will be simpler in the future, when a release done)
+The installation will create the necessary files/folders and update the PATH environment variable to add the folder where `vagrant-hostmap` is installed.
