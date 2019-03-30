@@ -18,23 +18,23 @@ namespace VagrantHostmap
 
         public List<string> GetIpAddresses()
         {
-            List<string> result = new List<string>();
+            // Note, don't depend on 'eth#" interface names, see https://superuser.com/a/1086705
 
-            for (int i = 0; i < 25; i++)
+            SshCommand netInterfaceNamesCmd = client.CreateCommand("ifconfig -a | sed 's/[ \t].*//;/^\\(lo\\|\\)$/d'");
+            netInterfaceNamesCmd.Execute();
+            string[] netInterfaceNames = netInterfaceNamesCmd.Result.Trim().Split('\n');
+
+            List<string> ipAddressesFound = new List<string>();
+            foreach(string interfaceName in netInterfaceNames)
             {
-                SshCommand netData = client.CreateCommand("ifconfig eth" + i.ToString() + " | grep 'inet addr:' | cut -d: -f2 | awk '{ print $1}'");
+                SshCommand netData = client.CreateCommand("ifconfig " + interfaceName + " | grep 'inet addr:' | cut -d: -f2 | awk '{ print $1}'");
                 netData.Execute();
                 string ip = netData.Result.Trim();
 
-                if (ip.Length == 0)
-                {
-                    break;
-                }
-
-                result.Add(ip);
+                ipAddressesFound.Add(ip);
             }
 
-            return result;
+            return ipAddressesFound;
         }
 
         public List<string> GetConnectableIpAddresses(List<string> ipAddresses)
