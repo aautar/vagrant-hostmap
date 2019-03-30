@@ -21,6 +21,8 @@
 bld/
 [Bb]in/
 [Oo]bj/
+installer/vagrant-hostmap-cache
+installer/vagrant-hostmap-SetupFiles
 
 # Visual Studio 2015 cache/options directory
 .vs/
