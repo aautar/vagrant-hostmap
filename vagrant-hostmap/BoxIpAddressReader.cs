@@ -31,6 +31,11 @@ namespace VagrantHostmap
                 netData.Execute();
                 string ip = netData.Result.Trim();
 
+                if(ip == "localhost" || ip == "127.0.0.1")
+                {
+                    continue;
+                }
+
                 ipAddressesFound.Add(ip);
             }
 
