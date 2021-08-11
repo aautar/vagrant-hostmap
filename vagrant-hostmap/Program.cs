@@ -8,20 +8,12 @@ namespace VagrantHostmap
 {
     class Program
     {
-        static void Main(string[] args)
+        static void UpdateEntry(string desiredHostname)
         {
-            if(args.Length == 0 || args[0].Length == 0)
-            {
-                Console.WriteLine("hostname not specified");
-                return;
-            }
-
-            var desiredHostname = args[0];
-
             Console.WriteLine("Retrieving box SSH info...");
             var connInfoReader = new BoxConnectionInfoReader(Environment.CurrentDirectory);
             var connectionInfo = connInfoReader.GetSshConnectionInfo();
-            if(connectionInfo == null)
+            if (connectionInfo == null)
             {
                 Console.WriteLine("Failed to get SSH info.");
                 Console.WriteLine("Make sure a vagrant box is setup correctly at this location and it is running.");
@@ -70,7 +62,18 @@ namespace VagrantHostmap
 
             hostFileUpdater.CopyTempToActual();
             Console.WriteLine("done.");
+        }
 
+        static void Main(string[] args)
+        {
+            if(args.Length == 0 || args[0].Length == 0)
+            {
+                Console.WriteLine("hostname not specified");
+                return;
+            }
+
+            var desiredHostname = args[0];
+            UpdateEntry(desiredHostname);
         }
     }
 }
