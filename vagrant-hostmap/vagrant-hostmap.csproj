@@ -3,7 +3,7 @@
     <TargetFramework>net8.0</TargetFramework>
     <OutputType>Exe</OutputType>
     <RootNamespace>VagrantHostmap</RootNamespace>
-    <GenerateAssemblyInfo>false</GenerateAssemblyInfo>
+    <GenerateAssemblyInfo>False</GenerateAssemblyInfo>
   </PropertyGroup>
   <PropertyGroup>
     <ApplicationManifest>app.manifest</ApplicationManifest>
@@ -12,6 +12,7 @@
     <Copyright>Copyright © Avishkar Autar  2021</Copyright>
     <AssemblyVersion>1.0.2.0</AssemblyVersion>
     <FileVersion>1.0.2.0</FileVersion>
+    <PublishAot>False</PublishAot>
   </PropertyGroup>
   <ItemGroup>
     <PackageReference Include="SSH.NET" Version="2024.0.0" />
