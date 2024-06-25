@@ -222,6 +222,7 @@
     <ROW Component="msquic.dll" ComponentId="{F278AE95-CF0A-4485-8A35-C2EFC0EB1F48}" Directory_="APPDIR" Attributes="256" KeyPath="msquic.dll"/>
     <ROW Component="netstandard.dll" ComponentId="{B7F14F46-E034-4DB9-B21B-0E21FB6A6AEF}" Directory_="APPDIR" Attributes="0" KeyPath="netstandard.dll"/>
     <ROW Component="vagranthostmap.deps.json" ComponentId="{E496C87F-2F57-4783-9332-89990E67B630}" Directory_="APPDIR" Attributes="0" KeyPath="vagranthostmap.deps.json" Type="0"/>
+    <ROW Component="vagranthostmap.dll" ComponentId="{4FDDC5E1-A7D4-4C79-9B9F-7D353A6712E2}" Directory_="APPDIR" Attributes="256" KeyPath="vagranthostmap.dll"/>
     <ROW Component="vagranthostmap.exe" ComponentId="{345676A5-508E-40BA-91C3-B7CA398C02B5}" Directory_="APPDIR" Attributes="256" KeyPath="vagranthostmap.exe"/>
   </COMPONENT>
   <COMPONENT cid="caphyon.advinst.msicomp.MsiFeatsComponent">
@@ -418,6 +419,7 @@
     <ROW File="System.Xml.XDocument.dll" Component_="System.Xml.XDocument.dll" FileName="SYST~158.DLL|System.Xml.XDocument.dll" Attributes="0" SourcePath="..\vagrant-hostmap\bin\Release\net8.0\publish\win-x64\System.Xml.XDocument.dll" SelfReg="false"/>
     <ROW File="System.Xml.XmlDocument.dll" Component_="System.Xml.XmlDocument.dll" FileName="SYST~159.DLL|System.Xml.XmlDocument.dll" Attributes="0" SourcePath="..\vagrant-hostmap\bin\Release\net8.0\publish\win-x64\System.Xml.XmlDocument.dll" SelfReg="false"/>
     <ROW File="System.Xml.XmlSerializer.dll" Component_="System.Xml.XmlSerializer.dll" FileName="SYST~160.DLL|System.Xml.XmlSerializer.dll" Attributes="0" SourcePath="..\vagrant-hostmap\bin\Release\net8.0\publish\win-x64\System.Xml.XmlSerializer.dll" SelfReg="false"/>
+    <ROW File="vagranthostmap.dll" Component_="vagranthostmap.dll" FileName="VAGRAN~1.DLL|vagrant-hostmap.dll" Attributes="0" SourcePath="..\vagrant-hostmap\bin\Release\net8.0\publish\win-x64\vagrant-hostmap.dll" SelfReg="false"/>
   </COMPONENT>
   <COMPONENT cid="caphyon.advinst.msicomp.BootstrOptComponent">
     <ROW BootstrOptKey="GlobalOptions" DownloadFolder="[AppDataFolder][|Manufacturer]\[|ProductName]\prerequisites" Options="2"/>
@@ -703,6 +705,7 @@
     <ROW Feature_="MainFeature" Component_="System.Xml.XDocument.dll"/>
     <ROW Feature_="MainFeature" Component_="System.Xml.XmlDocument.dll"/>
     <ROW Feature_="MainFeature" Component_="System.Xml.XmlSerializer.dll"/>
+    <ROW Feature_="MainFeature" Component_="vagranthostmap.dll"/>
   </COMPONENT>
   <COMPONENT cid="caphyon.advinst.msicomp.MsiInstExSeqComponent">
     <ROW Action="AI_DOWNGRADE" Condition="AI_NEWERPRODUCTFOUND AND (UILevel &lt;&gt; 5)" Sequence="210"/>
