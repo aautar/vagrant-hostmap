@@ -18,19 +18,21 @@ namespace VagrantHostmap
 
         public List<string> GetIpAddresses()
         {
+            List<string> ipAddressesFound = new List<string>();
+
+            //
             // Get interface names
             // Note, don't depend on 'eth#" interface names, see https://superuser.com/a/1086705
-            SshCommand netInterfaceNamesCmd = client.CreateCommand("ip -o link show | awk -F': ' '{print $2}'");
-            netInterfaceNamesCmd.Execute();
-            string[] netInterfaceNames = netInterfaceNamesCmd.Result.Trim().Split('\n');
+            //
 
-            List<string> ipAddressesFound = new List<string>();
-            foreach(string interfaceName in netInterfaceNames)
+            SshCommand netInterfaceAddrCmd = client.CreateCommand("ip -o -f inet addr");
+            netInterfaceAddrCmd.Execute();
+
+            Dictionary<string, string> interfaceToIpAddr = IpCmdOutputReader.GetInterfaceIPAddressMapFromINetAddrOneLineOutput(netInterfaceAddrCmd.Result);
+
+            foreach(KeyValuePair<string, string> entry in interfaceToIpAddr)
             {
-                SshCommand netData = client.CreateCommand("ip -f inet addr show " + interfaceName + " | grep -Po 'inet \\K[\\d.]+'");
-                netData.Execute();
-                string ip = netData.Result.Trim();
-
+                string ip = entry.Value;
                 if(ip == "localhost" || ip == "127.0.0.1")
                 {
                     continue;

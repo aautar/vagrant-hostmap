@@ -10,23 +10,37 @@ namespace VagrantHostmap
     {
         static void UpdateEntry(string desiredHostname)
         {
-            Console.WriteLine("Retrieving box SSH info...");
+            Console.WriteLine("Desired hostname = " + desiredHostname);
+            Console.WriteLine("Retrieving box SSH info from " + Environment.CurrentDirectory + "...");
             var connInfoReader = new BoxConnectionInfoReader(Environment.CurrentDirectory);
             var connectionInfo = connInfoReader.GetSshConnectionInfo();
             if (connectionInfo == null)
             {
-                Console.WriteLine("Failed to get SSH info.");
-                Console.WriteLine("Make sure a vagrant box is setup correctly at this location and it is running.");
+                Console.Error.WriteLine("Failed to get SSH info.");
+                Console.Error.WriteLine("Make sure a vagrant box is setup correctly at this location and it is running.");
                 return;
             }
 
-            Console.WriteLine("Connecting to box...");
+            Console.WriteLine("Connecting to box at " + connectionInfo.Host + ":" + connectionInfo.Port + "...");
             var client = new SshClient(connectionInfo);
-            client.Connect();
+
+            try
+            {
+                client.Connect();
+            }
+            catch (Exception ex)
+            {
+                Console.Error.WriteLine("Failed to establish SSH connection to box.");
+                return;
+            }
 
             Console.WriteLine("Reading IP addresses from box...");
             BoxIpAddressReader boxIpReader = new BoxIpAddressReader(client);
             var ipAddresses = boxIpReader.GetIpAddresses();
+            foreach (string ip in ipAddresses)
+            {
+                Console.Error.WriteLine("IP address found: " + ip);
+            }
 
             Console.WriteLine("Testing IP addresses...");
             ipAddresses = boxIpReader.GetConnectableIpAddresses(ipAddresses);
@@ -68,7 +82,7 @@ namespace VagrantHostmap
         {
             if(args.Length == 0 || args[0].Length == 0)
             {
-                Console.WriteLine("hostname not specified");
+                Console.Error.WriteLine("hostname not specified");
                 return;
             }
 
