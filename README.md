@@ -16,3 +16,6 @@ Once installed, run the following within a directory that has a vagrant environm
 Run the installer, **vagrant-hostmap.msi**
 
 The installation will create the necessary files/folders and update the PATH environment variable to add the folder where `vagrant-hostmap` is installed.
+
+## Dependencies
+The Linux system needs to be able to execute [ip](https://man7.org/linux/man-pages/man8/ip.8.html), specifically `ip -o -f inet addr`
