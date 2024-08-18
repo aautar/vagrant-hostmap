@@ -82,7 +82,7 @@ namespace VagrantHostmap
         {
             if(args.Length == 0 || args[0].Length == 0)
             {
-                Console.WriteLine("hostname not specified");
+                Console.Error.WriteLine("hostname not specified");
                 return;
             }
 
